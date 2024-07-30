@@ -8,6 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src.utils import read_polygon_and_create_bbox, fetch_sentinel_image, download_band, clipper, write_tiff
 import rasterio
 import numpy as np
+import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 
 def calculate_data(index_name, band_list, meta_details):
@@ -30,6 +31,15 @@ def calculate_data(index_name, band_list, meta_details):
     print(f"{index_name} Data created successfully")
     file_path = f"{fileName}_{sensing_date.strftime('%Y-%m-%d')}_{index_name}.tif"
     write_tiff(file_path, calc_index_array, index_meta)
+
+        # Save as PNG
+    png_file_path = f"{fileName}_{sensing_date.strftime('%Y-%m-%d')}_{index_name}.png"
+    plt.imshow(calc_index_array, cmap='RdYlGn')  
+    plt.colorbar()
+    plt.title(f"{index_name} {sensing_date.strftime('%Y-%m-%d')}")
+    plt.savefig(png_file_path)
+    plt.close()
+
     for temp_file_path in temp_file_paths:
         os.remove(temp_file_path)
     return "Success"
