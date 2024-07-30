@@ -1,0 +1,9 @@
+geopandas
+matplotlib
+numpy
+pystac-client
+rasterio
+rioxarray
+shapely
+
+
